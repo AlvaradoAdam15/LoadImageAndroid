@@ -37,9 +37,14 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View v) {
         new Thread(new Runnable() {
             public void run() {
-                Bitmap b = loadImageFromNetwork("http://www.techotopia.com/images/2/21/Android_process_priorities.png");
-                mImageView.setImageBitmap(b);
+                final Bitmap bitmap = loadImageFromNetwork("http://www.techotopia.com/images/2/21/Android_process_priorities.png");
+                mImageView.post(new Runnable() {
+                    public void run() {
+                        mImageView.setImageBitmap(bitmap);
+                    }
+                });
             }
         }).start();
+
     }
 }
