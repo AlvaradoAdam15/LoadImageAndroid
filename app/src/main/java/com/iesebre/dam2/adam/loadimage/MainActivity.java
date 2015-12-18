@@ -2,12 +2,11 @@ package com.iesebre.dam2.adam.loadimage;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
 import java.io.InputStream;
 import java.net.URL;
 
@@ -35,16 +34,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View v) {
-        new Thread(new Runnable() {
-            public void run() {
-                final Bitmap bitmap = loadImageFromNetwork("http://www.techotopia.com/images/2/21/Android_process_priorities.png");
-                mImageView.post(new Runnable() {
-                    public void run() {
-                        mImageView.setImageBitmap(bitmap);
-                    }
-                });
-            }
-        }).start();
+        new DownloadImageAsyncTask().execute("http://www.techotopia.com/images/2/21/Android_process_priorities.png");
+    }
 
+    private class DownloadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            return loadImageFromNetwork(params[0]);
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            mImageView.setImageBitmap(result);
+        }
     }
 }
