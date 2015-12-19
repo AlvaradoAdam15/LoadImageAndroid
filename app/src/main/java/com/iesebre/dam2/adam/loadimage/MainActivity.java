@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View v) {
-        new DownloadImageAsyncTask(mImageView).execute("http://www.techotopia.com/images/2/21/Android_process_priorities.png");
+        new DownloadImageAsyncTask(MainActivity.this, mImageView).execute("http://img0.mxstatic.com/wallpapers/f2d80279c0640107927416a56834d521_large.jpeg");
     }
 }
